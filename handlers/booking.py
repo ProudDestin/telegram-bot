@@ -141,7 +141,7 @@ async def confirm_booking(callback_query, state: FSMContext):
         # Perform the booking or any other required action
         # ...
 
-    await callback_query.message.reply('Бронирование подтверждено!', reply_markup=kb_client)
+    await callback_query.message.reply('Успешно забронировано! Администратор скоро свяжется с вами для подтверждения', reply_markup=kb_client)
 
     ref = db.reference('/')
 
