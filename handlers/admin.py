@@ -228,6 +228,15 @@ async def check_booking(message: types.Message):
         await bot.send_message(message.from_user.id, f'Имя: {b["name"]}\nКол-во: {b["people"]}\nТелефон: {b["phone"]}\nДата: ${b["date"]}\nВремя: {b["time"]}')
 
 
+async def check_rating(message: types.Message):
+    ref = db.reference('/')
+    rating = ref.child('rating').get()
+
+    for key in rating.keys():
+        r = rating[key]
+        await bot.send_message(message.from_user.id, f'Оценка: {r}')
+
+
 def register_handlers_admin(dp: Dispatcher):
     dp.register_message_handler(cm_start, commands=['Загрузить'], state=None)
     dp.register_message_handler(cancel_handler, state="*", commands='отмена')
@@ -249,3 +258,4 @@ def register_handlers_admin(dp: Dispatcher):
         process_number, state=DeleteMenuState.waiting_for_number)
 
     dp.register_message_handler(check_booking, commands=['Посмотреть'])
+    dp.register_message_handler(check_rating, commands=['Оценки'])

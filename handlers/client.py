@@ -90,6 +90,9 @@ async def process_callback(callback_query: types.CallbackQuery):
     await bot.delete_message(chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
     await bot.send_message(callback_query.from_user.id, f'Вы оценили на {rating} звездочек! Спасибо!')
 
+    ref = db.reference('/')
+    ref.child('rating').push(rating)
+
 
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start', 'help'])
